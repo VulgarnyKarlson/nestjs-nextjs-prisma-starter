@@ -1,0 +1,11 @@
+type Todo {
+  id: ID! @unique
+  content: String!
+  completed: Boolean!
+}
+
+type TodoAction {
+  id: ID! @unique
+  type: String!
+  context: Json
+}
