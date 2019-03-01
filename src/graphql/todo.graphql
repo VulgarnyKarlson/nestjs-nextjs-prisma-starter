@@ -1,0 +1,15 @@
+type Todo {
+  id: String!
+  content: String!
+  completed: Boolean!
+}
+
+type TodoAction {
+  id: String!
+  type: String!
+  context: Json
+}
+
+type Query {
+  todos: [Todo]
+}
