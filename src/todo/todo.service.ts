@@ -1,4 +1,3 @@
-import * as Rx from 'rxjs';
 import { Injectable, Logger } from "@nestjs/common";
 import { PubSubService } from "src/pubsub.service";
 import { PrismaClientService } from "src/prisma.service";
