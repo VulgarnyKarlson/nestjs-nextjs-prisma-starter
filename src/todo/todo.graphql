@@ -7,3 +7,7 @@ type TodoItem {
 type Query {
   todos: [TodoItem]
 }
+
+type Subscription {
+  todoUpdated: [TodoItem]
+}

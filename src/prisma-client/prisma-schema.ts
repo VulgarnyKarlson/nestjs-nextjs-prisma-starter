@@ -14,8 +14,6 @@ type BatchPayload {
   count: Long!
 }
 
-scalar Json
-
 scalar Long
 
 type Mutation {
@@ -74,7 +72,7 @@ type Todo {
 type TodoAction {
   id: ID!
   type: String!
-  context: Json
+  context: String
 }
 
 type TodoActionConnection {
@@ -85,7 +83,7 @@ type TodoActionConnection {
 
 input TodoActionCreateInput {
   type: String!
-  context: Json
+  context: String
 }
 
 type TodoActionEdge {
@@ -109,7 +107,7 @@ enum TodoActionOrderByInput {
 type TodoActionPreviousValues {
   id: ID!
   type: String!
-  context: Json
+  context: String
 }
 
 type TodoActionSubscriptionPayload {
@@ -132,12 +130,12 @@ input TodoActionSubscriptionWhereInput {
 
 input TodoActionUpdateInput {
   type: String
-  context: Json
+  context: String
 }
 
 input TodoActionUpdateManyMutationInput {
   type: String
-  context: Json
+  context: String
 }
 
 input TodoActionWhereInput {
@@ -169,6 +167,20 @@ input TodoActionWhereInput {
   type_not_starts_with: String
   type_ends_with: String
   type_not_ends_with: String
+  context: String
+  context_not: String
+  context_in: [String!]
+  context_not_in: [String!]
+  context_lt: String
+  context_lte: String
+  context_gt: String
+  context_gte: String
+  context_contains: String
+  context_not_contains: String
+  context_starts_with: String
+  context_not_starts_with: String
+  context_ends_with: String
+  context_not_ends_with: String
   AND: [TodoActionWhereInput!]
   OR: [TodoActionWhereInput!]
   NOT: [TodoActionWhereInput!]

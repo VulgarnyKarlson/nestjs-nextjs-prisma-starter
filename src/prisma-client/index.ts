@@ -161,8 +161,6 @@ export type TodoOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
-
 export type TodoActionOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -175,19 +173,21 @@ export type TodoActionOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
 export interface TodoActionCreateInput {
   type: String;
-  context?: Json;
-}
-
-export interface TodoUpdateInput {
-  content?: String;
-  completed?: Boolean;
+  context?: String;
 }
 
 export type TodoWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
+
+export interface TodoUpdateInput {
+  content?: String;
+  completed?: Boolean;
+}
 
 export interface TodoWhereInput {
   id?: ID_Input;
@@ -225,6 +225,17 @@ export interface TodoWhereInput {
   NOT?: TodoWhereInput[] | TodoWhereInput;
 }
 
+export interface TodoSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: TodoWhereInput;
+  AND?: TodoSubscriptionWhereInput[] | TodoSubscriptionWhereInput;
+  OR?: TodoSubscriptionWhereInput[] | TodoSubscriptionWhereInput;
+  NOT?: TodoSubscriptionWhereInput[] | TodoSubscriptionWhereInput;
+}
+
 export interface TodoActionWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
@@ -254,6 +265,20 @@ export interface TodoActionWhereInput {
   type_not_starts_with?: String;
   type_ends_with?: String;
   type_not_ends_with?: String;
+  context?: String;
+  context_not?: String;
+  context_in?: String[] | String;
+  context_not_in?: String[] | String;
+  context_lt?: String;
+  context_lte?: String;
+  context_gt?: String;
+  context_gte?: String;
+  context_contains?: String;
+  context_not_contains?: String;
+  context_starts_with?: String;
+  context_not_starts_with?: String;
+  context_ends_with?: String;
+  context_not_ends_with?: String;
   AND?: TodoActionWhereInput[] | TodoActionWhereInput;
   OR?: TodoActionWhereInput[] | TodoActionWhereInput;
   NOT?: TodoActionWhereInput[] | TodoActionWhereInput;
@@ -268,15 +293,9 @@ export type TodoActionWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface TodoSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: TodoWhereInput;
-  AND?: TodoSubscriptionWhereInput[] | TodoSubscriptionWhereInput;
-  OR?: TodoSubscriptionWhereInput[] | TodoSubscriptionWhereInput;
-  NOT?: TodoSubscriptionWhereInput[] | TodoSubscriptionWhereInput;
+export interface TodoActionUpdateManyMutationInput {
+  type?: String;
+  context?: String;
 }
 
 export interface TodoUpdateManyMutationInput {
@@ -297,12 +316,7 @@ export interface TodoActionSubscriptionWhereInput {
 
 export interface TodoActionUpdateInput {
   type?: String;
-  context?: Json;
-}
-
-export interface TodoActionUpdateManyMutationInput {
-  type?: String;
-  context?: Json;
+  context?: String;
 }
 
 export interface NodeNode {
@@ -328,51 +342,6 @@ export interface TodoActionEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface TodoActionPreviousValues {
-  id: ID_Output;
-  type: String;
-  context?: Json;
-}
-
-export interface TodoActionPreviousValuesPromise
-  extends Promise<TodoActionPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  type: () => Promise<String>;
-  context: () => Promise<Json>;
-}
-
-export interface TodoActionPreviousValuesSubscription
-  extends Promise<AsyncIterator<TodoActionPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  type: () => Promise<AsyncIterator<String>>;
-  context: () => Promise<AsyncIterator<Json>>;
-}
-
 export interface TodoConnection {
   pageInfo: PageInfo;
   edges: TodoEdge[];
@@ -394,61 +363,49 @@ export interface TodoConnectionSubscription
   aggregate: <T = AggregateTodoSubscription>() => T;
 }
 
-export interface TodoActionConnection {
-  pageInfo: PageInfo;
-  edges: TodoActionEdge[];
-}
-
-export interface TodoActionConnectionPromise
-  extends Promise<TodoActionConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<TodoActionEdge>>() => T;
-  aggregate: <T = AggregateTodoActionPromise>() => T;
-}
-
-export interface TodoActionConnectionSubscription
-  extends Promise<AsyncIterator<TodoActionConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TodoActionEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTodoActionSubscription>() => T;
-}
-
-export interface AggregateTodoAction {
-  count: Int;
-}
-
-export interface AggregateTodoActionPromise
-  extends Promise<AggregateTodoAction>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateTodoActionSubscription
-  extends Promise<AsyncIterator<AggregateTodoAction>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface TodoAction {
+export interface TodoActionPreviousValues {
   id: ID_Output;
   type: String;
-  context?: Json;
+  context?: String;
 }
 
-export interface TodoActionPromise extends Promise<TodoAction>, Fragmentable {
+export interface TodoActionPreviousValuesPromise
+  extends Promise<TodoActionPreviousValues>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
   type: () => Promise<String>;
-  context: () => Promise<Json>;
+  context: () => Promise<String>;
 }
 
-export interface TodoActionSubscription
-  extends Promise<AsyncIterator<TodoAction>>,
+export interface TodoActionPreviousValuesSubscription
+  extends Promise<AsyncIterator<TodoActionPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   type: () => Promise<AsyncIterator<String>>;
-  context: () => Promise<AsyncIterator<Json>>;
+  context: () => Promise<AsyncIterator<String>>;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface TodoSubscriptionPayload {
@@ -476,36 +433,25 @@ export interface TodoSubscriptionPayloadSubscription
   previousValues: <T = TodoPreviousValuesSubscription>() => T;
 }
 
-export interface BatchPayload {
-  count: Long;
+export interface TodoActionConnection {
+  pageInfo: PageInfo;
+  edges: TodoActionEdge[];
 }
 
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
+export interface TodoActionConnectionPromise
+  extends Promise<TodoActionConnection>,
     Fragmentable {
-  count: () => Promise<Long>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TodoActionEdge>>() => T;
+  aggregate: <T = AggregateTodoActionPromise>() => T;
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
+export interface TodoActionConnectionSubscription
+  extends Promise<AsyncIterator<TodoActionConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface AggregateTodo {
-  count: Int;
-}
-
-export interface AggregateTodoPromise
-  extends Promise<AggregateTodo>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateTodoSubscription
-  extends Promise<AsyncIterator<AggregateTodo>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TodoActionEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTodoActionSubscription>() => T;
 }
 
 export interface TodoPreviousValues {
@@ -550,6 +496,58 @@ export interface TodoSubscription
   completed: () => Promise<AsyncIterator<Boolean>>;
 }
 
+export interface TodoAction {
+  id: ID_Output;
+  type: String;
+  context?: String;
+}
+
+export interface TodoActionPromise extends Promise<TodoAction>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  type: () => Promise<String>;
+  context: () => Promise<String>;
+}
+
+export interface TodoActionSubscription
+  extends Promise<AsyncIterator<TodoAction>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  type: () => Promise<AsyncIterator<String>>;
+  context: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTodoAction {
+  count: Int;
+}
+
+export interface AggregateTodoActionPromise
+  extends Promise<AggregateTodoAction>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTodoActionSubscription
+  extends Promise<AsyncIterator<AggregateTodoAction>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AggregateTodo {
+  count: Int;
+}
+
+export interface AggregateTodoPromise
+  extends Promise<AggregateTodo>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTodoSubscription
+  extends Promise<AsyncIterator<AggregateTodo>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface TodoActionSubscriptionPayload {
   mutation: MutationType;
   node: TodoAction;
@@ -575,6 +573,22 @@ export interface TodoActionSubscriptionPayloadSubscription
   previousValues: <T = TodoActionPreviousValuesSubscription>() => T;
 }
 
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
 export interface TodoEdge {
   node: Todo;
   cursor: String;
@@ -593,16 +607,9 @@ export interface TodoEdgeSubscription
 }
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number;
-
-export type Long = string;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -610,7 +617,12 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 export type ID_Input = string | number;
 export type ID_Output = string;
 
-export type Json = any;
+export type Long = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
