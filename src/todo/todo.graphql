@@ -1,0 +1,9 @@
+type TodoItem {
+  id: String!
+  content: String!
+  completed: Boolean!
+}
+
+type Query {
+  todos: [TodoItem]
+}

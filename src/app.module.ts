@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { Module, Logger } from '@nestjs/common';
 import { GraphQLSchema } from 'graphql';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -12,12 +13,15 @@ import { TodoModule } from './todo/todo.module';
   imports: [
     TodoModule,
     GraphQLModule.forRoot({
-      typePaths: ['./graphql/*.graphql'],
+      typePaths: ['./src/**/*.graphql'],
       debug: true,
       playground: true,
+      installSubscriptionHandlers: true,
+      // definitions: {
+      //   path: join(process.cwd(), 'src/graphql.schema.ts'),
+      //   outputAs: 'class',
+      // },
       transformSchema: async (schema: GraphQLSchema) => {
-        const logger = new Logger('transformSchema');
-        logger.log(schema);
         const prismaSchema = await getRemotePrismaSchema();
 
         return mergeSchemas({
