@@ -1,0 +1,32 @@
+type Query {
+  authTest(token: TokenInput): Test
+}
+
+type Mutation {
+  registerUser(user: RegisterUserInput): AuthPayload
+  login(user: AuthUserInput): AuthPayload
+}
+
+input RegisterUserInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+input AuthUserInput {
+  email: String!
+  password: String!
+}
+
+type AuthPayload {
+  token: String!
+}
+
+input TokenInput {
+  token: String!
+}
+
+type Test {
+  status: String!
+}

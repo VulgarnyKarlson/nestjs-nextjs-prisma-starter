@@ -8,6 +8,9 @@
     "target": "es6",
     "sourceMap": true,
     "outDir": "./dist",
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
     "baseUrl": "./"
   },
   "exclude": ["node_modules"]

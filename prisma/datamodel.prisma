@@ -9,3 +9,11 @@ type TodoAction {
   type: String!
   context: String
 }
+
+type User {
+  id: ID! @unique
+  email: String! @unique
+  firstName: String!
+  lastName: String!
+  passwordDigest: String!
+}

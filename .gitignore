@@ -1,3 +1,9 @@
+data
+
+# Ignore auto generated
+prisma-client
+src/graphql.schema.ts
+
 # Logs
 logs
 *.log
