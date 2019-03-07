@@ -12,7 +12,7 @@ export default GraphQLModule.forRootAsync({
       debug: true,
       playground: true,
       installSubscriptionHandlers: true,
-      context: ({ req }) => ({ req }),
+      context: ({ req }: { req: any }) => ({ req }),
       definitions: {
         path: join(process.cwd(), 'src/graphql.schema.ts'),
         outputAs: 'class',
