@@ -1,10 +1,9 @@
-import { UseGuards, Logger } from '@nestjs/common';
-import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
+import { Resolver, Mutation, Args } from '@nestjs/graphql';
 // import { AuthPayload, RegisterUserInput, AuthUserInput, TokenInput, Test } from 'src/graphql.schema';
 
+import { AuthService } from 'src/auth';
 import { UserService } from './user.service';
-import { AuthService } from '../auth/auth.service';
-import { JwtAuthGuard } from '../auth/auth.guard';
+import { Inject, forwardRef } from '@nestjs/common';
 
 interface RegisterUserInput {
   email: string;
@@ -22,21 +21,12 @@ interface AuthPayload {
   token: string;
 }
 
-interface TokenInput {
-  token: string;
-}
-
-interface Test {
-  status: string;
-}
-
 @Resolver('User')
 export class UserResolver {
-  private readonly logger = new Logger(UserResolver.name);
-
   constructor(
-    private readonly userService: UserService,
+    @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
+    private readonly userService: UserService,
   ) {}
 
   @Mutation('registerUser')
@@ -54,16 +44,6 @@ export class UserResolver {
     const token = this.authService.createToken(loggedInUser);
     return {
       token,
-    };
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Query('authTest')
-  async authTest(@Args('token') token: TokenInput, @Context() context: any): Promise<Test> {
-    this.logger.log(token);
-    this.logger.log(context);
-    return {
-      status: 'good',
     };
   }
 }

@@ -4,7 +4,7 @@ import { GraphQLSchema } from 'graphql';
 import { introspectSchema, makeRemoteExecutableSchema } from 'graphql-tools';
 import fetch from 'isomorphic-unfetch';
 
-import { ConfigService } from 'src/common-modules/config';
+import { ConfigService } from 'src/config';
 import { Prisma } from './prisma-client';
 
 @Injectable()

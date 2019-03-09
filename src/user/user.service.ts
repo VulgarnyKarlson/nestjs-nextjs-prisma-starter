@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { hash, compare } from 'bcrypt';
 
-import { PrismaClientService, Prisma, User } from 'src/common-modules/prisma';
+import { PrismaClientService, Prisma, User } from 'src/prisma';
 import { JwtPayload } from '../auth/jwt.interface';
 
 interface RegisterUser {

@@ -3,4 +3,4 @@ datamodel: datamodel.prisma
 
 generate:
   - generator: typescript-client
-    output: ../src/common-modules/prisma/prisma-client/
+    output: ../src/prisma/prisma-client/

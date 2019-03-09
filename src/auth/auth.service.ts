@@ -1,7 +1,7 @@
 import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt.interface';
-import { User } from 'src/graphql.schema';
+import { User } from 'src/prisma';
 import { UserService } from '../user';
 
 @Injectable()
