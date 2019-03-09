@@ -2,7 +2,7 @@ import { join } from 'path';
 import { GraphQLSchema } from 'graphql';
 import { mergeSchemas } from 'graphql-tools';
 import { GraphQLModule, GqlModuleOptions } from '@nestjs/graphql';
-import { PrismaClientService, PrismaModule } from 'src/common-modules/prisma';
+import { PrismaClientService, PrismaModule } from './prisma';
 
 export default GraphQLModule.forRootAsync({
   imports: [PrismaModule],
